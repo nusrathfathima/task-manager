@@ -25,7 +25,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(-
 @keyframes drift{0%{transform:translate(0,0);}100%{transform:translate(20px,30px);}}
 
 nav{position:relative;z-index:10;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);background:rgba(9,9,11,.8);backdrop-filter:blur(20px);}
-.nav-logo{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;background:linear-gradient(135deg,#fff,var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nav-logo{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;background:linear-gradient(135deg,#fff,var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;cursor:pointer;transition:opacity .2s;}
+.nav-logo:hover{opacity:.7;}
 .nav-back{display:inline-flex;align-items:center;gap:.4rem;color:var(--muted);font-size:.825rem;text-decoration:none;transition:color .2s;}
 .nav-back:hover{color:var(--text);}
 
@@ -99,12 +100,11 @@ footer a{color:var(--violet);text-decoration:none;}
 <div class="glow-orb glow-2"></div>
 
 <nav>
-  <div class="nav-logo">Nusrath Fathima</div>
+  <a href="https://nusrathfathima.com" class="nav-logo">Nusrath Fathima</a>
   <a href="https://nusrathfathima.com" class="nav-back">← Back to Portfolio</a>
 </nav>
 
 <div class="hero">
-  <div class="hero-badge">Project 02</div>
   <h1>Task <em>Manager</em></h1>
   <p class="hero-sub">A full CRUD task management app with filter views, completion tracking, live stats, and persistent localStorage so your tasks are never lost.</p>
   <div class="tag-row">
