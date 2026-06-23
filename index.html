@@ -50,7 +50,34 @@ h1{font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,2.75rem);font-weight:70
 h1 em{font-style:italic;font-weight:300;color:var(--coral);}
 .hero-sub{color:var(--muted);font-size:.9rem;max-width:420px;margin:0 auto;}
 
-.app{max-width:780px;margin:0 auto;padding:1.5rem 2rem 4rem;width:100%;}
+/* 3-COLUMN LAYOUT */
+.layout{max-width:1240px;margin:0 auto;padding:1.5rem 2rem 4rem;width:100%;display:grid;grid-template-columns:230px minmax(0,640px) 230px;gap:2.5rem;align-items:start;justify-content:center;}
+.app{width:100%;}
+
+/* SIDE RAILS */
+.rail{display:flex;flex-direction:column;gap:1.25rem;position:sticky;top:1.5rem;}
+.rail-card{background:var(--bg);border-radius:var(--r-sm);box-shadow:var(--nm-out-sm);padding:1.1rem 1.15rem;}
+.rail-title{font-size:.72rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem;}
+.rail-body{display:flex;flex-direction:column;gap:.6rem;}
+.rail-row{display:flex;align-items:center;justify-content:space-between;gap:.5rem;font-size:.8rem;}
+.rail-row .rl{display:flex;align-items:center;gap:.5rem;color:var(--text);font-weight:500;}
+.rail-row .rdot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.rail-count{background:var(--bg);box-shadow:var(--nm-in-sm);border-radius:var(--r-pill);padding:.1rem .6rem;font-size:.72rem;font-weight:700;color:var(--muted);min-width:26px;text-align:center;}
+.rail-empty{font-size:.74rem;color:var(--subtle);line-height:1.5;}
+.up-item{display:flex;flex-direction:column;gap:.15rem;padding:.55rem .7rem;background:var(--bg);box-shadow:var(--nm-in-sm);border-radius:10px;}
+.up-text{font-size:.76rem;color:var(--text);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.up-when{font-size:.66rem;font-weight:600;color:var(--muted);}
+.up-when.overdue{color:var(--hi);}
+.rail-tip{font-size:.78rem;color:var(--muted);line-height:1.6;font-style:italic;}
+
+@media(max-width:1080px){
+  .layout{grid-template-columns:1fr;max-width:640px;}
+  .rail{position:static;flex-direction:row;flex-wrap:wrap;}
+  .rail-card{flex:1;min-width:200px;}
+  .rail-right{order:3;}
+  .rail-left{order:2;}
+  .app{order:1;}
+}
 .panel{background:var(--bg);border-radius:var(--r);box-shadow:var(--nm-out);padding:1.75rem;}
 
 /* PROGRESS HEADER */
@@ -102,10 +129,11 @@ h1 em{font-style:italic;font-weight:300;color:var(--coral);}
 .task-item.removing{animation:taskout .3s var(--ease) forwards;}
 @keyframes taskout{to{opacity:0;transform:translateX(40px);height:0;padding-top:0;padding-bottom:0;margin:0;}}
 .task-item.done{box-shadow:var(--nm-in-sm);}
-.checkbox{width:28px;height:28px;border-radius:50%;flex-shrink:0;cursor:pointer;background:var(--bg);box-shadow:var(--nm-out-sm);display:flex;align-items:center;justify-content:center;transition:all .25s var(--ease);position:relative;}
+.checkbox{width:28px;height:28px;border-radius:50%;flex-shrink:0;cursor:pointer;background:var(--bg);box-shadow:var(--nm-out-sm);border:2px solid var(--coral-soft);display:flex;align-items:center;justify-content:center;transition:all .25s var(--ease);position:relative;}
+.checkbox:hover{border-color:var(--coral);}
 .checkbox svg{width:15px;height:15px;}
 .checkbox .tick{stroke:#fff;stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .3s var(--ease) .05s;}
-.checkbox.checked{background:var(--green);box-shadow:var(--nm-in-sm);}
+.checkbox.checked{background:var(--green);border-color:var(--green);box-shadow:var(--nm-in-sm);}
 .checkbox.checked .tick{stroke-dashoffset:0;}
 .checkbox.checked{animation:pop .35s var(--ease);}
 @keyframes pop{0%{transform:scale(1);}45%{transform:scale(1.25);}100%{transform:scale(1);}}
@@ -180,8 +208,23 @@ footer a{color:var(--coral);text-decoration:none;}
   <p class="hero-sub">A soft, tactile to-do app that makes getting things done genuinely satisfying.</p>
 </div>
 
-<div class="app" id="appTop">
-  <div class="panel">
+<div class="layout" id="appTop">
+
+  <!-- LEFT RAIL: category + priority breakdown -->
+  <aside class="rail rail-left">
+    <div class="rail-card">
+      <div class="rail-title">📂 By Category</div>
+      <div class="rail-body" id="catBreakdown"></div>
+    </div>
+    <div class="rail-card">
+      <div class="rail-title">🎯 By Priority</div>
+      <div class="rail-body" id="prioBreakdown"></div>
+    </div>
+  </aside>
+
+  <!-- CENTER: main panel -->
+  <div class="app">
+    <div class="panel">
     <div class="prog-head">
       <div class="ring-wrap">
         <svg width="74" height="74" viewBox="0 0 74 74">
@@ -240,7 +283,21 @@ footer a{color:var(--coral);text-decoration:none;}
       <div class="stat"><div class="stat-n" id="sAct">0</div><div class="stat-l">Active</div></div>
       <div class="stat"><div class="stat-n" id="sDon">0</div><div class="stat-l">Done</div></div>
     </div>
+    </div>
   </div>
+
+  <!-- RIGHT RAIL: upcoming + tip -->
+  <aside class="rail rail-right">
+    <div class="rail-card">
+      <div class="rail-title">📅 Upcoming</div>
+      <div class="rail-body" id="upcomingList"></div>
+    </div>
+    <div class="rail-card tip-card">
+      <div class="rail-title">💡 Tip</div>
+      <div class="rail-tip" id="tipText"></div>
+    </div>
+  </aside>
+
 </div>
 
 <div class="features">
@@ -258,15 +315,18 @@ footer a{color:var(--coral);text-decoration:none;}
 <script>
 document.getElementById('dateLabel').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
 
-let tasks=JSON.parse(localStorage.getItem('nf_tm2')||'null')||[
-  {id:1,text:'Build portfolio website',done:true,prio:'hi',cat:'Work',due:''},
-  {id:2,text:'Add Weather App project',done:true,prio:'mid',cat:'Work',due:''},
-  {id:3,text:'Apply to frontend developer roles',done:false,prio:'hi',cat:'Work',due:''},
-  {id:4,text:'Practice React hooks daily',done:false,prio:'lo',cat:'Study',due:''},
+function isoOffset(days){const d=new Date();d.setDate(d.getDate()+days);return d.toISOString().slice(0,10);}
+let tasks=JSON.parse(localStorage.getItem('nf_tm3')||'null')||[
+  {id:1,text:'Finish quarterly report for the team meeting',done:false,prio:'hi',cat:'Work',due:isoOffset(1)},
+  {id:2,text:'Reply to client emails',done:false,prio:'mid',cat:'Work',due:isoOffset(0)},
+  {id:3,text:'Grocery shopping — milk, eggs, veggies',done:false,prio:'mid',cat:'Errands',due:''},
+  {id:4,text:'30-minute evening workout',done:false,prio:'lo',cat:'Health',due:''},
+  {id:5,text:'Read two chapters of current book',done:true,prio:'lo',cat:'Personal',due:''},
+  {id:6,text:'Pay electricity bill',done:true,prio:'hi',cat:'Errands',due:''},
 ];
 let filter='all',uid=Date.now(),curPrio='lo';
 
-function save(){localStorage.setItem('nf_tm2',JSON.stringify(tasks));}
+function save(){localStorage.setItem('nf_tm3',JSON.stringify(tasks));}
 
 function setPrio(p){
   curPrio=p;
@@ -371,7 +431,49 @@ function render(){
   else if(pct>=34)msg.textContent='Nice progress — halfway zone! 💪';
   else if(pct>0)msg.textContent='Good start, keep it up! 🌱';
   else msg.textContent="Let's knock these out! ✨";
+
+  renderRails();
 }
+
+/* ── SIDE RAILS ── */
+const TIPS=[
+  'Break big tasks into smaller steps — momentum builds fast.',
+  'Tackle your highest-priority task first thing in the morning.',
+  'The two-minute rule: if it takes under 2 minutes, do it now.',
+  'Group similar errands together to save time and energy.',
+  'Celebrate small wins — every checkmark counts!',
+  'Review tomorrow\'s tasks tonight for a calmer start.',
+];
+const CAT_COLORS={Work:'#4a7cff',Personal:'#a06bff',Study:'#f5a623',Health:'#5fb98e',Errands:'#ff7e6b'};
+function renderRails(){
+  // category breakdown (active tasks)
+  const cats={};
+  tasks.filter(t=>!t.done).forEach(t=>{const c=t.cat||'Uncategorized';cats[c]=(cats[c]||0)+1;});
+  const cb=document.getElementById('catBreakdown');
+  const entries=Object.entries(cats);
+  cb.innerHTML=entries.length?entries.map(([c,n])=>`
+    <div class="rail-row"><span class="rl"><span class="rdot" style="background:${CAT_COLORS[c]||'#b5a294'}"></span>${c}</span><span class="rail-count">${n}</span></div>`).join(''):'<div class="rail-empty">No active tasks.</div>';
+
+  // priority breakdown (active)
+  const labels={hi:'High',mid:'Medium',lo:'Low'};
+  const colors={hi:'var(--hi)',mid:'var(--mid)',lo:'var(--lo)'};
+  const pcount={hi:0,mid:0,lo:0};
+  tasks.filter(t=>!t.done).forEach(t=>{pcount[t.prio||'lo']++;});
+  const pb=document.getElementById('prioBreakdown');
+  pb.innerHTML=['hi','mid','lo'].map(p=>`
+    <div class="rail-row"><span class="rl"><span class="rdot" style="background:${colors[p]}"></span>${labels[p]}</span><span class="rail-count">${pcount[p]}</span></div>`).join('');
+
+  // upcoming (active tasks with due dates, soonest first)
+  const up=tasks.filter(t=>!t.done&&t.due).sort((a,b)=>new Date(a.due)-new Date(b.due)).slice(0,4);
+  const ul=document.getElementById('upcomingList');
+  ul.innerHTML=up.length?up.map(t=>{
+    const d=fmtDue(t.due);
+    return `<div class="up-item"><span class="up-text">${t.text}</span><span class="up-when ${d.overdue?'overdue':''}">${d.label}</span></div>`;
+  }).join(''):'<div class="rail-empty">No upcoming deadlines. 🎈</div>';
+}
+
+// rotating daily tip
+document.getElementById('tipText').textContent=TIPS[new Date().getDate()%TIPS.length];
 
 /* ── CONFETTI ── */
 const cvs=document.getElementById('confetti');
