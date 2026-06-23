@@ -116,8 +116,8 @@ h1 em{font-style:italic;font-weight:300;color:var(--coral);}
 .task-tag{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:.12rem .5rem;border-radius:var(--r-pill);background:var(--coral-soft);color:var(--coral-dim);}
 .task-due{font-size:.68rem;color:var(--muted);display:inline-flex;align-items:center;gap:.25rem;}
 .task-due.overdue{color:var(--hi);font-weight:600;}
-.del-btn{width:30px;height:30px;border-radius:50%;border:none;background:var(--bg);color:var(--subtle);cursor:pointer;font-size:.85rem;box-shadow:var(--nm-out-sm);transition:all .2s;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-.del-btn:hover{color:var(--coral);}
+.del-btn{width:30px;height:30px;border-radius:50%;border:none;background:var(--bg);color:var(--coral-dim);cursor:pointer;font-size:.9rem;font-weight:700;box-shadow:var(--nm-out-sm);transition:all .2s;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+.del-btn:hover{color:#fff;background:var(--coral);}
 .del-btn:active{box-shadow:var(--nm-in-sm);}
 .empty{text-align:center;color:var(--subtle);font-size:.85rem;padding:2.5rem 1rem;}
 
@@ -180,7 +180,7 @@ footer a{color:var(--coral);text-decoration:none;}
   <p class="hero-sub">A soft, tactile to-do app that makes getting things done genuinely satisfying.</p>
 </div>
 
-<div class="app">
+<div class="app" id="appTop">
   <div class="panel">
     <div class="prog-head">
       <div class="ring-wrap">
@@ -281,6 +281,12 @@ function addTask(){
   tasks.unshift({id:uid++,text,done:false,prio:curPrio,cat,due});
   inp.value='';document.getElementById('dueInput').value='';
   save();render();
+  // scroll so the task panel is at the top, moving the hero/badge out of view
+  setTimeout(()=>{
+    const el=document.getElementById('appTop');
+    const y=el.getBoundingClientRect().top+window.pageYOffset-12;
+    window.scrollTo({top:y,behavior:'smooth'});
+  },100);
 }
 
 function toggle(id){
@@ -408,6 +414,9 @@ function toggleTheme(){
   if(html.getAttribute('data-theme')==='dark'){html.removeAttribute('data-theme');btn.textContent='🌙';localStorage.setItem('nf_theme','light');}
   else{html.setAttribute('data-theme','dark');btn.textContent='☀️';localStorage.setItem('nf_theme','dark');}
 }
+if('scrollRestoration' in history){history.scrollRestoration='manual';}
+window.addEventListener('beforeunload',function(){window.scrollTo(0,0);});
+window.addEventListener('load',function(){window.scrollTo(0,0);});
 (function(){
   if(localStorage.getItem('nf_theme')==='dark'){document.documentElement.setAttribute('data-theme','dark');document.getElementById('themeToggle').textContent='☀️';}
 })();
