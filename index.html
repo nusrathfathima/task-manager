@@ -105,11 +105,17 @@ h1 em{font-style:italic;font-weight:300;color:var(--coral);}
 .opts-row{display:flex;gap:.6rem;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center;}
 .opt-group{display:flex;align-items:center;gap:.4rem;background:var(--bg);box-shadow:var(--nm-in-sm);border-radius:var(--r-pill);padding:.3rem .4rem;}
 .opt-lbl{font-size:.66rem;font-weight:700;color:var(--subtle);text-transform:uppercase;letter-spacing:.04em;padding-left:.5rem;}
-.prio-dot{width:24px;height:24px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--bg);box-shadow:var(--nm-out-sm);transition:all .15s;padding:0;}
+.prio-dot{width:24px;height:24px;border-radius:50%;border:2px solid transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;background:var(--bg);box-shadow:var(--nm-out-sm);transition:all .15s;padding:0;}
+.prio-dot:hover{background:var(--coral-soft);transform:scale(1.12);}
+.prio-dot:hover span{transform:scale(1.15);}
+.prio-dot span{transition:transform .15s;}
 .prio-dot span{width:11px;height:11px;border-radius:50%;display:block;}
 .prio-dot.sel{box-shadow:var(--nm-in-sm);}
 .dot-hi{background:var(--hi);}.dot-mid{background:var(--mid);}.dot-lo{background:var(--lo);}
-.cat-select,.due-input{border:none;background:var(--bg);box-shadow:var(--nm-in-sm);border-radius:var(--r-pill);padding:.45rem .9rem;font-family:inherit;font-size:.75rem;font-weight:600;color:var(--text);cursor:pointer;outline:none;}
+.cat-select,.due-input{border:1.5px solid var(--coral-soft);background:var(--bg-tint);box-shadow:var(--nm-in-sm);border-radius:var(--r-pill);padding:.5rem 1rem;font-family:inherit;font-size:.82rem;font-weight:600;color:var(--text);cursor:pointer;outline:none;transition:all .15s;}
+.cat-select:hover,.due-input:hover{border-color:var(--coral);}
+.cat-select:focus,.due-input:focus{border-color:var(--coral);box-shadow:var(--nm-in-sm),0 0 0 3px var(--coral-soft);}
+.cat-select option{background:var(--bg-tint);color:var(--text);font-weight:500;}
 .due-input{cursor:text;}
 
 /* FILTERS */
