@@ -193,6 +193,21 @@ footer a{color:var(--coral);text-decoration:none;}
   .features{padding:0 1.25rem 3rem;}
   .input-row{flex-direction:column;}
   .features-grid{grid-template-columns:1fr;}
+  /* options row (priority/category/date) wraps instead of overflowing */
+  .opts-row{flex-direction:column;align-items:stretch;gap:.6rem;}
+  .opt-group{justify-content:center;}
+  .cat-select,.due-input{width:100%;text-align:center;}
+  /* progress header stacks a little tighter */
+  .prog-head{gap:1rem;}
+  /* stats stay 3-up but smaller */
+  .stat-n{font-size:1.5rem;}
+}
+@media(max-width:380px){
+  .stats{gap:.6rem;}
+  .stat{padding:.9rem .5rem;}
+  .stat-n{font-size:1.3rem;}
+  h1{font-size:1.8rem;}
+  .task-item{gap:.7rem;padding:.85rem .9rem;}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;}}
 </style>
