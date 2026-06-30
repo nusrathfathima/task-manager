@@ -193,10 +193,13 @@ footer a{color:var(--coral);text-decoration:none;}
   .features{padding:0 1.25rem 3rem;}
   .input-row{flex-direction:column;}
   .features-grid{grid-template-columns:1fr;}
-  /* options row (priority/category/date) wraps instead of overflowing */
-  .opts-row{flex-direction:column;align-items:stretch;gap:.6rem;}
-  .opt-group{justify-content:center;}
+  /* options row: clean aligned stack on mobile */
+  .opts-row{flex-direction:column;align-items:stretch;gap:.7rem;}
+  .opt-group{justify-content:space-between;width:100%;padding:.5rem .9rem;}
+  .opt-lbl{padding-left:0;}
   .cat-select,.due-input{width:100%;text-align:center;}
+  /* give priority dots a touch more room so they're centered nicely */
+  .opt-group .prio-dot{margin-left:.2rem;}
   /* progress header stacks a little tighter */
   .prog-head{gap:1rem;}
   /* stats stay 3-up but smaller */
